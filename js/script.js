@@ -58,14 +58,14 @@ const playMusic = (track, pause = false) => {
     currentSong.src = `${currFolder}/${track}`;
     if (!pause) {
         currentSong.play();
-        play.src = "images/pause.svg";
+        play.src = "/images/pause.svg";
     }
     document.querySelector(".songinfo").innerHTML = decodeURI(track);
     document.querySelector(".songtime").innerHTML = "00:00 / 00:00";
 };
 
 async function displayAlbums() {
-    let a = await fetch(`songs/`);
+    let a = await fetch(`/songs/`);
     let response = await a.text();
     let div = document.createElement("div");
     div.innerHTML = response;
@@ -75,7 +75,7 @@ async function displayAlbums() {
     for (let e of anchors) {
         if (e.href.includes("/songs")) {
             let folder = e.href.split("/").slice(-2)[0];
-            let a = await fetch(`songs/${folder}/info.json`);
+            let a = await fetch(`/songs/${folder}/info.json`);
             let albumInfo = await a.json();
 
             cardContainer.innerHTML += `
@@ -89,7 +89,7 @@ async function displayAlbums() {
                             </g>
                         </svg>
                     </div>
-                    <img src="songs/${folder}/cover.jpeg" alt="" />
+                    <img src="/songs/${folder}/cover.jpeg" alt="" />
                     <h2>${albumInfo.title}</h2>
                     <p>${albumInfo.description}</p>
                 </div>`;
@@ -106,7 +106,7 @@ async function displayAlbums() {
 }
 
 async function main() {
-    await getSongs("songs/ncs");
+    await getSongs("/songs/ncs");
     playMusic(songs[0], true);
     displayAlbums();
 
@@ -114,10 +114,10 @@ async function main() {
     play.addEventListener("click", () => {
         if (currentSong.paused) {
             currentSong.play();
-            play.src = "images/pause.svg";
+            play.src = "/images/pause.svg";
         } else {
             currentSong.pause();
-            play.src = "images/play.svg";
+            play.src = "/images/play.svg";
         }
     });
 
