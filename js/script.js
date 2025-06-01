@@ -12,7 +12,7 @@ function secondsToMinutesSeconds(seconds) {
 
 async function getSongs(folder) {
     currFolder = folder;
-    let a = await fetch(`${folder}/`);
+   let a = await fetch("songs/"); // Not localhost
     let response = await a.text();
     let div = document.createElement("div");
     div.innerHTML = response;
@@ -58,7 +58,7 @@ const playMusic = (track, pause = false) => {
     currentSong.src = `${currFolder}/${track}`;
     if (!pause) {
         currentSong.play();
-        play.src = "/images/pause.svg";
+        play.src = "images/pause.svg";
     }
     document.querySelector(".songinfo").innerHTML = decodeURI(track);
     document.querySelector(".songtime").innerHTML = "00:00 / 00:00";
@@ -106,7 +106,7 @@ async function displayAlbums() {
 }
 
 async function main() {
-    await getSongs("/songs/ncs");
+    await getSongs("songs/ncs");
     playMusic(songs[0], true);
     displayAlbums();
 
@@ -114,10 +114,10 @@ async function main() {
     play.addEventListener("click", () => {
         if (currentSong.paused) {
             currentSong.play();
-            play.src = "/images/pause.svg";
+            play.src = "images/pause.svg";
         } else {
             currentSong.pause();
-            play.src = "/images/play.svg";
+            play.src = "images/play.svg";
         }
     });
 
